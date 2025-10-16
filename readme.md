@@ -22,7 +22,7 @@ Cette plateforme illustre la conception d’une architecture **modulaire, observ
 
 ---
 
-## 🧠 Stack Technique
+## Stack Technique
 
 | Domaine | Technologie | Rôle |
 |----------|--------------|------|
@@ -42,11 +42,11 @@ Cette plateforme illustre la conception d’une architecture **modulaire, observ
 
 ```mermaid
 graph TD
-    A[📦 Open APIs<br>(Open-Meteo, Navitia)] -->|Ingestion DAGs| B[⚙️ Apache Airflow<br>(Docker)]
-    B -->|Ecriture Parquet| C[(☁️ AWS S3<br>Data Lake)]
+    A[📦 Open APIs<br> Open-Meteo, Navitia] -->|Ingestion DAGs| B[⚙️ Apache Airflow<br> Docker]
+    B -->|Ecriture Parquet| C[☁️ AWS S3<br>Data Lake]
     C --> D[🔍 Great Expectations<br>Data Validation]
     D -->|Data Docs| C
-    B --> E[(🗃️ AWS DynamoDB<br>State / Idempotence)]
+    B --> E[🗃️ AWS DynamoDB<br>State / Idempotence]
     B --> F[📢 AWS SNS<br>Alertes / Monitoring]
     C --> G[🦆 DuckDB<br>Curations & KPIs]
     G --> H[🪶 AWS Lambda<br>API Serverless]
@@ -62,21 +62,21 @@ graph TD
 
 Sources :
 
-Open-Meteo API (conditions météo)
+  - Open-Meteo API (conditions météo)
 
-Navitia API (ponctualité transport)
+  - Navitia API (ponctualité transport)
 
-Orchestration : Airflow
+  - Orchestration : Airflow
 
-Stockage : fichiers Parquet → s3://umwi-data-dev/raw/
+  - Stockage : fichiers Parquet → s3://umwi-data-dev/raw/
 
 #### 2️⃣ Validation & Qualité des données
 
-Framework : Great Expectations
+- Framework : Great Expectations
 
-Génération automatique des rapports dans S3
+- Génération automatique des rapports dans S3
 
-Alertes en cas d’échec : SNS → Email
+- Alertes en cas d’échec : SNS → Email
 
 #### 3️⃣ Curations et Indicateurs
 
@@ -84,36 +84,44 @@ DuckDB pour jointures et calculs de KPIs
 
 Trois niveaux de data :
 
-🥉 Bronze → brut
+  - 🥉 Bronze → brut
 
-🥈 Silver → nettoyé
+  - 🥈 Silver → nettoyé
 
-🥇 Gold → indicateurs (corrélation pluie ↔ retards)
+  - 🥇 Gold → indicateurs (corrélation pluie ↔ retards)
 
 #### 4️⃣ API Serverless
 
-AWS Lambda (FastAPI + Mangum)
+- AWS Lambda (FastAPI + Mangum)
 
-API Gateway → expose /kpi & /correlation
+- API Gateway → expose /kpi & /correlation
 
-DynamoDB : stockage des états et cache.
+- DynamoDB : stockage des états et cache.
 
 #### 5️⃣ Visualisation
 
-Dashboard hébergé sur GitHub Pages
+- Dashboard hébergé sur GitHub Pages
 
-Chart.js / JS fetch API consommant l’API Lambda
+- Chart.js / JS fetch API consommant l’API Lambda
 
-Envoi d’alertes via EmailJS.
+- Envoi d’alertes via EmailJS.
 
 ## Infrastructure as Code
 
 L’infrastructure est déployée automatiquement via Terraform :
 
 S3 Bucket : ( umwi-data-dev) Data Lake (brut, silver, gold)
+
+
 DynamoDB Table : ( umwi-ingestion-dev )	Table d’état / idempotence
+
+
 SNS Topic	: (umwi-alerts-dev)	Alertes par e-mail
+
+
 IAM Role : 	( umwi-lambda-exec-dev )	Permissions pour Lambda
+
+
 CI/CD	: s	Automatisation de l’infra et du code
 
 ## Structure du Projet
@@ -156,9 +164,13 @@ Dataops-urban-mobility/
 ## Résultats & Impacts
 
 ✅ Corrélation quantifiée entre météo et performance transport
+
 ✅ Détection automatique des anomalies (via GE + SNS)
+
 ✅ Infra serverless et scalable, sans maintenance manuelle
+
 ✅ Coût zéro (Free-tier AWS + GitHub Pages)
+
 ✅ Réutilisable pour tout projet DataOps / Smart City
 
 🧑‍💻 Auteur & Contact
@@ -166,7 +178,8 @@ Dataops-urban-mobility/
 - Me
 - LinkedIn :  https://www.linkedin.com/in/houssem-rezgui-/
 
-🛠️ Stack Icons
+## Stack Icons
 <p align="center"> <img src="https://skillicons.dev/icons?i=python,aws,docker,terraform,githubactions,linux,fastapi,vscode" /> </p>
+
 
 “Building reliable, observable and scalable data systems — one DAG at a time.”
