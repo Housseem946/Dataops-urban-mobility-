@@ -27,27 +27,27 @@ flowchart LR
     end
 
     subgraph Orchestration
-      B1[Airflow (Docker/K8s)]:::ctrl
+      B1[Airflow Docker/K8s]:::ctrl
       B2[Great Expectations]:::dq
     end
 
-    subgraph Storage (AWS)
-      C1[S3 - raw/bronze<br/>(parquet)]:::s3
-      C2[S3 - curated/silver<br/>(parquet)]:::s3
-      C3[S3 - mart/gold<br/>(parquet)]:::s3
-      D1[(DynamoDB<br/>watermarks)]:::ddb
-      D2((SNS)):::sns
+    subgraph Storage AWS
+      C1[S3 - raw/bronze<br/> parquet]:::s3
+      C2[S3 - curated/silver<br/> parquet]:::s3
+      C3[S3 - mart/gold<br/> parquet ]:::s3
+      D1[ DynamoDB<br/>watermarks]:::ddb
+      D2( SNS ):::sns
     end
 
     subgraph Compute
-      E1[DuckDB<br/>(SQL on Parquet)]:::compute
-      E2[Lambda (Python)]:::lambda
+      E1[DuckDB<br/> SQL on Parquet]:::compute
+      E2[Lambda Python ]:::lambda
     end
 
     subgraph Serving
       F1[API Gateway]:::apigw
       F2[Dashboard statique<br/>GitHub Pages]:::ui
-      F3[EmailJS<br/>(notifications produit)]:::ext
+      F3[EmailJS<br/> notifications produit]:::ext
     end
 
     A1 -->|pull| B1
