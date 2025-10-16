@@ -32,22 +32,22 @@ flowchart LR
     end
 
     subgraph Storage (AWS)
-      C1[S3 - raw/bronze]\n(parquet):::s3
-      C2[S3 - curated/silver]\n(parquet):::s3
-      C3[S3 - mart/gold]\n(parquet):::s3
-      D1[(DynamoDB)\nwatermarks]:::ddb
+      C1[S3 - raw/bronze<br/>(parquet)]:::s3
+      C2[S3 - curated/silver<br/>(parquet)]:::s3
+      C3[S3 - mart/gold<br/>(parquet)]:::s3
+      D1[(DynamoDB<br/>watermarks)]:::ddb
       D2((SNS)):::sns
     end
 
     subgraph Compute
-      E1[DuckDB\n(SQL on Parquet)]:::compute
+      E1[DuckDB<br/>(SQL on Parquet)]:::compute
       E2[Lambda (Python)]:::lambda
     end
 
     subgraph Serving
       F1[API Gateway]:::apigw
-      F2[Dashboard static\nGitHub Pages]:::ui
-      F3[EmailJS (notifications produit)]:::ext
+      F2[Dashboard statique<br/>GitHub Pages]:::ui
+      F3[EmailJS<br/>(notifications produit)]:::ext
     end
 
     A1 -->|pull| B1
@@ -61,8 +61,8 @@ flowchart LR
     E1 -->|write| C2
     E1 -->|write KPI| C3
 
-    E2 -->|read parquet gold| C3
-    E2 --> F1
+    C3 -->|read parquet gold| E2
+    F1 --> E2
     F2 -->|fetch KPI| F1
     F2 -->|opt-in alerts| F3
 
@@ -379,13 +379,7 @@ cd infra/terraform/envs/dev && terraform init && terraform plan
 
 ---
 
-## 18) Licence
-
-[MIT](./LICENSE)
-
----
-
-## 19) Remerciements
+## 18) Remerciements
 
 * Open-Meteo (données météo)
 * Auteurs GTFS-RT & APIs transport publiques
@@ -393,6 +387,6 @@ cd infra/terraform/envs/dev && terraform init && terraform plan
 
 ---
 
-## 20) Auteur
+## 19) Auteur
 
 Authored by me 
