@@ -1,0 +1,13 @@
+# terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+
+# .env
+
+terraform-admin_accessKeys.csv
+
+
+# fichiers txt
+notes_a_faire.txt
