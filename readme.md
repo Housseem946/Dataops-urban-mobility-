@@ -110,19 +110,15 @@ Trois niveaux de data :
 
 L’infrastructure est déployée automatiquement via Terraform :
 
-S3 Bucket : ( umwi-data-dev) Data Lake (brut, silver, gold)
+- S3 Bucket : ( umwi-data-dev) Data Lake (brut, silver, gold)
 
+- DynamoDB Table : ( umwi-ingestion-dev )	Table d’état / idempotence
 
-DynamoDB Table : ( umwi-ingestion-dev )	Table d’état / idempotence
+- SNS Topic	: (umwi-alerts-dev)	Alertes par e-mail
 
+- IAM Role : 	( umwi-lambda-exec-dev )	Permissions pour Lambda
 
-SNS Topic	: (umwi-alerts-dev)	Alertes par e-mail
-
-
-IAM Role : 	( umwi-lambda-exec-dev )	Permissions pour Lambda
-
-
-CI/CD	: s	Automatisation de l’infra et du code
+- CI/CD	: s	Automatisation de l’infra et du code
 
 ## Structure du Projet
 
@@ -173,7 +169,7 @@ Dataops-urban-mobility/
 
 ✅ Réutilisable pour tout projet DataOps / Smart City
 
-🧑‍💻 Auteur & Contact
+## 🧑‍💻 Auteur & Contact
 
 - Me
 - LinkedIn :  https://www.linkedin.com/in/houssem-rezgui-/
