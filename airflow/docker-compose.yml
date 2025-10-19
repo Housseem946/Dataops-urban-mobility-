@@ -1,0 +1,73 @@
+version: "3.9"
+
+x-airflow-common: &airflow-common
+  image: apache/airflow:2.9.3
+  environment:
+    AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+    AIRFLOW__WEBSERVER__RBAC: "True"
+    AIRFLOW__CORE__EXECUTOR: "LocalExecutor"  # LocalExecutor = exécution parallèle locale (pratique en dev).
+
+    # Deux façons pour donner des credentials AWS au conteneur :
+    # AWS creds: option 1 (profil monté) - Profil (AWS_PROFILE) + montage de ton dossier .aws (voir volumes ci-dessous).
+    # AWS_PROFILE: "umwi-dev"
+    # AWS_DEFAULT_REGION: "eu-west-3"
+
+    # Option 2 (variables d'env) -> on peut les mettre dans .env :
+
+    # On n'utilise plus AWS_PROFILE; on passe les clés via .env
+    AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+    AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+    AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - ./requirements.txt:/opt/airflow/requirements.txt
+    # # Monte le dossier .aws local -> Airflow utilisera ton profil umwi-dev
+    # - ${USERPROFILE}/.aws:/home/airflow/.aws
+
+  user: "50000:0"
+  depends_on:
+    - postgres
+
+services:
+
+  # Base métadonnées Airflow (état des DAGs, tâches, connexions…).
+  postgres:
+    image: postgres:15
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  airflow-init:
+    <<: *airflow-common
+    entrypoint: /bin/bash
+    command: >
+      -c "pip install --no-cache-dir -r /opt/airflow/requirements.txt
+      && airflow db init
+      && airflow users create
+         --username ${AIRFLOW_ADMIN_USERNAME}
+         --firstname ${AIRFLOW_ADMIN_FIRSTNAME}
+         --lastname ${AIRFLOW_ADMIN_LASTNAME}
+         --role Admin
+         --email ${AIRFLOW_ADMIN_EMAIL}
+         --password ${AIRFLOW_ADMIN_PASSWORD}"
+
+# Le serveur web Airflow
+  webserver:
+    <<: *airflow-common
+    command: webserver
+    ports:
+      - "8080:8080"
+
+# Le scheduler déclenche les tasks selon la schedule_interval 
+  scheduler:
+    <<: *airflow-common
+    command: scheduler
+
+volumes:
+  pgdata:

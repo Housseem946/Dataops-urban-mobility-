@@ -5,6 +5,7 @@
 .terraform.lock.hcl
 
 # .env
+airflow/.env
 terraform-admin_accessKeys.csv
 
 
