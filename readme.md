@@ -159,15 +159,15 @@ Dataops-urban-mobility/
 
 ## Résultats & Impacts
 
-✅ Corrélation quantifiée entre météo et performance transport
+- Corrélation quantifiée entre météo et performance transport
 
-✅ Détection automatique des anomalies (via GE + SNS)
+- Détection automatique des anomalies (via GE + SNS)
 
-✅ Infra serverless et scalable, sans maintenance manuelle
+- Infra serverless et scalable, sans maintenance manuelle
 
-✅ Coût zéro (Free-tier AWS + GitHub Pages)
+- Coût zéro (Free-tier AWS + GitHub Pages)
 
-✅ Réutilisable pour tout projet DataOps / Smart City
+- Réutilisable pour tout projet DataOps / Smart City
 
 ## 🧑‍💻 Auteur & Contact
 
@@ -178,4 +178,5 @@ Dataops-urban-mobility/
 <p align="center"> <img src="https://skillicons.dev/icons?i=python,aws,docker,terraform,githubactions,linux,fastapi,vscode" /> </p>
 
 
-“Building reliable, observable and scalable data systems — one DAG at a time.”
+
+## “Building reliable, observable and scalable data systems — one DAG at a time.”
