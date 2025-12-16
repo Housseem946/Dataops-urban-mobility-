@@ -1,4 +1,4 @@
-##Intérêt : ta Lambda pourra (1) lire S3 (gold), (2) lire/écrire DynamoDB (cache/state), (3) publier dans SNS (alertes), (4) écrire ses logs CloudWatch.
+##Intérêt : Lambda pourra (1) lire S3 (gold), (2) lire/écrire DynamoDB (cache/state), (3) publier dans SNS (alertes), (4) écrire ses logs CloudWatch.
 
 
 # Role d'exécution Lambda
